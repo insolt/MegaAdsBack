@@ -1,7 +1,7 @@
 import express, { json } from "express";
 import cors from 'cors';
 import 'express-async-errors';
-// import {handleError} from "./utils/errors";
+import {handleError, ValidationError} from "./utils/errors";
 // import {homeRouter} from "./routers/home";
 // import {childRouter} from "./routers/child";
 // import {giftRouter} from "./routers/gift";
@@ -16,11 +16,13 @@ app.use(cors({
 app.use(json()); // Content-type: application/json
 
 
-// app.use('/', homeRouter);
+// app.use('/', async (req, res) => {
+//     throw new ValidationError('HAHAHA');
+// });
 // app.use('/child', childRouter);
 // app.use('/gift', giftRouter);
 
-// app.use(handleError);
+app.use(handleError);
 
 
 app.listen(3001, '0.0.0.0', () => {
