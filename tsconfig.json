@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "target": "ES2020",
+    "downlevelIteration": true,
+    "module": "CommonJS",
+    "lib": [
+      "es6"
+    ],
+    "outDir": "./dist",
+    "experimentalDecorators": true, //using decorators
+    "emitDecoratorMetadata": true, //using decorators
+    "moduleResolution": "node",
+    "esModuleInterop": true // no jest warning
+  }
+}
