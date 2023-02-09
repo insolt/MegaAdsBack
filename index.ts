@@ -1,7 +1,8 @@
 import express, { json } from "express";
 import cors from 'cors';
 import 'express-async-errors';
-import {handleError, ValidationError} from "./utils/errors";
+import {handleError} from "./utils/errors";
+import rateLimit from "express-rate-limit";
 // import {homeRouter} from "./routers/home";
 // import {childRouter} from "./routers/child";
 // import {giftRouter} from "./routers/gift";
@@ -15,6 +16,10 @@ app.use(cors({
 }))
 app.use(json()); // Content-type: application/json
 
+app.use(rateLimit({
+    windowMs: 5 * 60 * 1000,
+    max: 100,
+}))
 
 // app.use('/', async (req, res) => {
 //     throw new ValidationError('HAHAHA');
