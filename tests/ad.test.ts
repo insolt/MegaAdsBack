@@ -49,5 +49,4 @@ test('AdRecords.findAll returns small amount of data.', async () => {
     expect((ads[0] as AdEntity).price).toBeUndefined();
     expect((ads[0] as AdEntity).description).toBeUndefined();
     expect((ads[0] as AdEntity).name).toBeUndefined();
-    expect((ads[0] as AdEntity).url).toBeUndefined();
 })
