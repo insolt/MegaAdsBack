@@ -2,6 +2,7 @@ import {AdEntity, NewAdEntity, SimpleAdEntity} from "../types";
 import {ValidationError} from "../utils/errors";
 import {pool} from "../utils/db";
 import {FieldPacket} from "mysql2";
+import {v4 as uuid} from "uuid";
 
 type AdRecordResults = [AdEntity[], FieldPacket[]]
 
@@ -44,6 +45,16 @@ export class AdRecord implements AdEntity {
         this.url = obj.url;
         this.lat = obj.lat;
         this.lon = obj.lon;
+    }
+
+    async insert(): Promise<void> {
+        if (!this.id) {
+            this.id = uuid();
+        } else {
+            throw new Error("Object already exists on data base");
+        }
+
+        await pool.execute("INSERT INTO `ads` (`id`, `name`,`description`, `price`, `url`, `lat`, `lon`) VALUES (:id, :name, :description, :price, :url, :lat, :lon)", this);
     }
 
     static async getOne(id: string): Promise<AdRecord> | null {

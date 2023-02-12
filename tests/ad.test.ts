@@ -6,6 +6,15 @@ afterAll(async () => {
     await pool.end();
 })
 
+const defaultObject = {
+    name: 'Mike Born',
+    description: 'Person',
+    url: 'https://onet.pl',
+    lat: 70,
+    lon: 8,
+    price: 0,
+};
+
 test('AdRecord returns data from database for single entry.', async () => {
 
     const ad = await AdRecord.getOne('abcd')
@@ -49,4 +58,22 @@ test('AdRecords.findAll returns small amount of data.', async () => {
     expect((ads[0] as AdEntity).price).toBeUndefined();
     expect((ads[0] as AdEntity).description).toBeUndefined();
     expect((ads[0] as AdEntity).name).toBeUndefined();
+})
+
+test('AdRecords.insert returns new UUID.', async () => {
+    const ad = await new AdRecord(defaultObject);
+    await ad.insert();
+    expect(ad.id).toBeDefined();
+    expect(typeof ad.id).toBe('string');
+})
+
+test('AdRecords.insert returns new UUID.', async () => {
+    const ad = await new AdRecord(defaultObject);
+    await ad.insert();
+
+    const foundAd = await AdRecord.getOne(ad.id);
+
+    expect(foundAd).toBeDefined();
+    expect(foundAd).not.toBeNull();
+    expect(foundAd.id).toBe(ad.id);
 })
